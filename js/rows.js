@@ -1,16 +1,16 @@
-// A row is one patient: four name fields, a phone number, and how it got there.
+// A row is one patient: a first and last name, a phone number, and how it got there.
 // Warnings are always computed from the row, never stored.
 
-import { toAsciiDigits, normalizePhone, isValidIndianMobile } from './phone.js?v=ccdeced';
+import { toAsciiDigits, normalizePhone, isValidIndianMobile } from './phone.js?v=7248c64';
 
-const NAME_FIELDS = ['firstNameEnglish', 'lastNameEnglish', 'firstNameMarathi', 'lastNameMarathi'];
+// The field names say "English" because rows saved by earlier versions also
+// had Marathi name fields; those are no longer used.
+const NAME_FIELDS = ['firstNameEnglish', 'lastNameEnglish'];
 
 export const SHEET_HEADER = [
   'Sr. No.',
-  'First name (English)',
-  'Last name (English)',
-  'First name (Marathi)',
-  'Last name (Marathi)',
+  'First name',
+  'Last name',
   'Phone number',
   'Needs checking',
 ];
@@ -32,14 +32,7 @@ export function readLocally(heardText) {
   const phone = normalizePhone(text);
   const nameText = text.replace(/[\d+\-.,;:()]/g, ' ');
   const { first, last } = splitFirstAndLast(nameText);
-  const isDevanagari = /[ऀ-ॿ]/.test(nameText);
-  return {
-    firstNameEnglish: isDevanagari ? '' : first,
-    lastNameEnglish: isDevanagari ? '' : last,
-    firstNameMarathi: isDevanagari ? first : '',
-    lastNameMarathi: isDevanagari ? last : '',
-    phone,
-  };
+  return { firstNameEnglish: first, lastNameEnglish: last, phone };
 }
 
 export function createRow({ id, heardText }) {
@@ -104,8 +97,6 @@ export function toSheetData(rows) {
     String(index + 1),
     row.firstNameEnglish,
     row.lastNameEnglish,
-    row.firstNameMarathi,
-    row.lastNameMarathi,
     row.phone,
     warningsFor(row, rows).join('; '),
   ]);

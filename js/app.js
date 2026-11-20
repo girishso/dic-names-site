@@ -7,20 +7,20 @@ import {
   applyEdit,
   settleInterruptedRows,
   warningsFor,
-} from './rows.js?v=ccdeced';
-import { cleanUpEntry, describeCleanupError } from './claude-cleanup.js?v=ccdeced';
-import { downloadExcel } from './excel.js?v=ccdeced';
-import { isSpeechSupported, listenOnce } from './speech.js?v=ccdeced';
+} from './rows.js?v=7248c64';
+import { cleanUpEntry, describeCleanupError } from './claude-cleanup.js?v=7248c64';
+import { downloadExcel } from './excel.js?v=7248c64';
+import { isSpeechSupported, listenOnce } from './speech.js?v=7248c64';
 import {
   loadRows,
   saveRows,
   loadApiKey,
   saveApiKey,
   removeApiKey,
-} from './storage.js?v=ccdeced';
+} from './storage.js?v=7248c64';
 
 const KEY_TEST_HEARING = 'Ramesh Patil 9822012345';
-// The phone listens in Indian English; Claude adds the Marathi spelling.
+// The phone listens in Indian English.
 const SPEECH_LANGUAGE = 'en-IN';
 
 const elements = {
@@ -85,15 +85,13 @@ function renderRowSummary(row, serialNumber, warnings) {
   summary.setAttribute('aria-label', `Edit row ${serialNumber}`);
 
   const englishName = joinNames(row.firstNameEnglish, row.lastNameEnglish);
-  const marathiName = joinNames(row.firstNameMarathi, row.lastNameMarathi);
 
   summary.append(
     createElement('span', 'row-number', String(serialNumber)),
-    createElement('span', 'row-name', englishName || marathiName || '(no name)'),
+    createElement('span', 'row-name', englishName || '(no name)'),
   );
 
   const details = createElement('span', 'row-details');
-  if (englishName && marathiName) details.append(`${marathiName}  `);
   details.append(createElement('span', 'row-phone', row.phone || '(no number)'));
   summary.append(details);
 
@@ -131,10 +129,8 @@ function renderRowForm(row, serialNumber) {
   form.setAttribute('aria-label', `Edit row ${serialNumber}`);
 
   form.append(
-    labelledInput({ labelText: 'First name (English)', name: 'firstNameEnglish', value: row.firstNameEnglish }),
-    labelledInput({ labelText: 'Last name (English)', name: 'lastNameEnglish', value: row.lastNameEnglish }),
-    labelledInput({ labelText: 'First name (Marathi)', name: 'firstNameMarathi', value: row.firstNameMarathi }),
-    labelledInput({ labelText: 'Last name (Marathi)', name: 'lastNameMarathi', value: row.lastNameMarathi }),
+    labelledInput({ labelText: 'First name', name: 'firstNameEnglish', value: row.firstNameEnglish }),
+    labelledInput({ labelText: 'Last name', name: 'lastNameEnglish', value: row.lastNameEnglish }),
     labelledInput({ labelText: 'Phone number', name: 'phone', value: row.phone, type: 'tel', fullWidth: true }),
   );
 

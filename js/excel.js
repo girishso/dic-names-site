@@ -1,9 +1,9 @@
 // Builds the Excel file in the browser and hands it to the phone as a download.
 
-import { utils, writeFile } from '../vendor/xlsx.js?v=ccdeced';
-import { toSheetData } from './rows.js?v=ccdeced';
+import { utils, writeFile } from '../vendor/xlsx.js?v=7248c64';
+import { toSheetData } from './rows.js?v=7248c64';
 
-const COLUMN_WIDTHS_IN_CHARACTERS = [8, 22, 20, 22, 20, 14, 44];
+const COLUMN_WIDTHS_IN_CHARACTERS = [8, 22, 20, 14, 44];
 
 function todayAsIsoDate() {
   const now = new Date();
