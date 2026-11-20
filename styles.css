@@ -93,26 +93,6 @@ summary:focus-visible,
   outline-offset: 2px;
 }
 
-.language-switch {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.language-switch button {
-  min-height: 44px;
-  border: 0;
-  background: var(--surface);
-}
-
-.language-switch button[aria-checked="true"] {
-  background: var(--accent);
-  color: var(--accent-text);
-  font-weight: 600;
-}
-
 .mic-button {
   display: flex;
   align-items: center;
@@ -120,7 +100,7 @@ summary:focus-visible,
   gap: 10px;
   width: 100%;
   min-height: 84px;
-  margin-top: 16px;
+  margin-top: 0;
   padding: 12px 16px;
   border: 0;
   border-radius: 14px;

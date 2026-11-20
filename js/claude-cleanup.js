@@ -1,7 +1,7 @@
 // Asks Claude to turn what the phone heard into a clean patient entry.
 // The call goes straight from this browser to api.anthropic.com.
 
-import Anthropic from '../vendor/anthropic-sdk.js?v=b73ed98';
+import Anthropic from '../vendor/anthropic-sdk.js?v=ccdeced';
 
 export const CLEANUP_MODEL = 'claude-sonnet-5-5';
 
@@ -9,7 +9,7 @@ const REQUEST_TIMEOUT_MILLISECONDS = 20000;
 
 const SYSTEM_PROMPT = `You clean up dictated entries for a patient contact list.
 
-A doctor in Maharashtra reads out one patient at a time from a handwritten page: the patient's name, then their mobile number. He speaks Marathi and some English, and the names are mostly Marathi. An Android phone's speech recognition turned his speech into text. You receive up to three alternative hearings of the same utterance, most likely first. They are often imperfect: names can be misheard as ordinary words, and digits can arrive as Devanagari digits, as number words in Marathi, Hindi or English, or with words such as "double" and "triple".
+A doctor in Maharashtra reads out one patient at a time from a handwritten page: the patient's name, then their mobile number. He speaks Marathi and some English, and the names are mostly Marathi. A phone's speech recognition, set to Indian English, turned his speech into text, so Marathi names usually arrive in Latin letters and are often misspelt or replaced by similar-sounding English words. You receive up to three alternative hearings of the same utterance, most likely first. They are often imperfect: names can be misheard as ordinary words, and digits can arrive as Devanagari digits, as number words in Marathi, Hindi or English, or with words such as "double" and "triple".
 
 Work out the single entry he most likely said and return it in the required format.
 

@@ -7,25 +7,24 @@ import {
   applyEdit,
   settleInterruptedRows,
   warningsFor,
-} from './rows.js?v=b73ed98';
-import { cleanUpEntry, describeCleanupError } from './claude-cleanup.js?v=b73ed98';
-import { downloadExcel } from './excel.js?v=b73ed98';
-import { isSpeechSupported, listenOnce } from './speech.js?v=b73ed98';
+} from './rows.js?v=ccdeced';
+import { cleanUpEntry, describeCleanupError } from './claude-cleanup.js?v=ccdeced';
+import { downloadExcel } from './excel.js?v=ccdeced';
+import { isSpeechSupported, listenOnce } from './speech.js?v=ccdeced';
 import {
   loadRows,
   saveRows,
   loadApiKey,
   saveApiKey,
   removeApiKey,
-  loadLanguage,
-  saveLanguage,
-} from './storage.js?v=b73ed98';
+} from './storage.js?v=ccdeced';
 
-const KEY_TEST_HEARING = 'रमेश पाटील 9822012345';
+const KEY_TEST_HEARING = 'Ramesh Patil 9822012345';
+// The phone listens in Indian English; Claude adds the Marathi spelling.
+const SPEECH_LANGUAGE = 'en-IN';
 
 const elements = {
   rowCount: document.getElementById('row-count'),
-  languageButtons: Array.from(document.querySelectorAll('.language-switch button')),
   micButton: document.getElementById('mic-button'),
   micLabel: document.getElementById('mic-label'),
   status: document.getElementById('status'),
@@ -45,7 +44,6 @@ const elements = {
 
 // Rows are kept oldest first; the list shows them newest first.
 let rows = settleInterruptedRows(loadRows());
-let language = loadLanguage();
 let activeListening = null;
 let editingRowId = null;
 
@@ -234,7 +232,7 @@ async function addEntry(alternatives) {
 function setListeningAppearance(isListening) {
   elements.micButton.setAttribute('aria-pressed', String(isListening));
   elements.micLabel.textContent = isListening
-    ? 'Listening… tap to stop'
+    ? 'Listening… tap when done'
     : 'Tap and say name, then number';
 }
 
@@ -245,18 +243,14 @@ async function toggleListening() {
   }
   try {
     activeListening = listenOnce({
-      language,
+      language: SPEECH_LANGUAGE,
       onInterimText: (interimText) => setStatus(`Hearing: ${interimText}`),
     });
     setListeningAppearance(true);
     setStatus('Listening…');
     const alternatives = await activeListening.finished;
     if (alternatives.length === 0) {
-      setStatus(
-        language === 'mr-IN'
-          ? 'Nothing was heard in Marathi. Tap and try again. If this keeps happening, this phone may not support Marathi speech: switch to English.'
-          : 'Nothing was heard in English. Tap and try again, speaking close to the phone.',
-      );
+      setStatus('Nothing was heard. Tap and try again, speaking close to the phone.');
     } else {
       addEntry(alternatives);
     }
@@ -265,14 +259,6 @@ async function toggleListening() {
   } finally {
     activeListening = null;
     setListeningAppearance(false);
-  }
-}
-
-// ---------- Language ----------
-
-function renderLanguage() {
-  for (const button of elements.languageButtons) {
-    button.setAttribute('aria-checked', String(button.dataset.language === language));
   }
 }
 
@@ -301,14 +287,6 @@ async function testSavedKey() {
 // ---------- Wiring ----------
 
 elements.micButton.addEventListener('click', toggleListening);
-
-for (const button of elements.languageButtons) {
-  button.addEventListener('click', () => {
-    language = button.dataset.language;
-    saveLanguage(language);
-    renderLanguage();
-  });
-}
 
 elements.typedEntryForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -366,6 +344,5 @@ if (!isSpeechSupported()) {
 }
 
 persistRows();
-renderLanguage();
 renderKeyState();
 renderRows();

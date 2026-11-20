@@ -3,7 +3,6 @@
 
 const ROWS_KEY = 'dictateNames.rows';
 const API_KEY_KEY = 'dictateNames.claudeApiKey';
-const LANGUAGE_KEY = 'dictateNames.language';
 
 function read(key) {
   try {
@@ -54,12 +53,4 @@ export function saveApiKey(apiKey) {
 
 export function removeApiKey() {
   remove(API_KEY_KEY);
-}
-
-export function loadLanguage() {
-  return read(LANGUAGE_KEY) === 'en-IN' ? 'en-IN' : 'mr-IN';
-}
-
-export function saveLanguage(language) {
-  write(LANGUAGE_KEY, language);
 }

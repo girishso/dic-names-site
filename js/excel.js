@@ -1,7 +1,7 @@
 // Builds the Excel file in the browser and hands it to the phone as a download.
 
-import { utils, writeFile } from '../vendor/xlsx.js?v=b73ed98';
-import { toSheetData } from './rows.js?v=b73ed98';
+import { utils, writeFile } from '../vendor/xlsx.js?v=ccdeced';
+import { toSheetData } from './rows.js?v=ccdeced';
 
 const COLUMN_WIDTHS_IN_CHARACTERS = [8, 22, 20, 22, 20, 14, 44];
 
