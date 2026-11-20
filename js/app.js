@@ -7,10 +7,10 @@ import {
   applyEdit,
   settleInterruptedRows,
   warningsFor,
-} from './rows.js';
-import { cleanUpEntry, describeCleanupError } from './claude-cleanup.js';
-import { downloadExcel } from './excel.js';
-import { isSpeechSupported, listenOnce } from './speech.js';
+} from './rows.js?v=b73ed98';
+import { cleanUpEntry, describeCleanupError } from './claude-cleanup.js?v=b73ed98';
+import { downloadExcel } from './excel.js?v=b73ed98';
+import { isSpeechSupported, listenOnce } from './speech.js?v=b73ed98';
 import {
   loadRows,
   saveRows,
@@ -19,7 +19,7 @@ import {
   removeApiKey,
   loadLanguage,
   saveLanguage,
-} from './storage.js';
+} from './storage.js?v=b73ed98';
 
 const KEY_TEST_HEARING = 'रमेश पाटील 9822012345';
 

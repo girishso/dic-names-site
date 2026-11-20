@@ -1,7 +1,7 @@
 // A row is one patient: four name fields, a phone number, and how it got there.
 // Warnings are always computed from the row, never stored.
 
-import { toAsciiDigits, normalizePhone, isValidIndianMobile } from './phone.js';
+import { toAsciiDigits, normalizePhone, isValidIndianMobile } from './phone.js?v=b73ed98';
 
 const NAME_FIELDS = ['firstNameEnglish', 'lastNameEnglish', 'firstNameMarathi', 'lastNameMarathi'];
 

@@ -1,7 +1,7 @@
 // Asks Claude to turn what the phone heard into a clean patient entry.
 // The call goes straight from this browser to api.anthropic.com.
 
-import Anthropic from '../vendor/anthropic-sdk.js';
+import Anthropic from '../vendor/anthropic-sdk.js?v=b73ed98';
 
 export const CLEANUP_MODEL = 'claude-sonnet-5-5';
 
