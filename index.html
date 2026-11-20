@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.anthropic.com; base-uri 'none'; form-action 'none'">
+  <meta name="robots" content="noindex">
+  <title>Patient list</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1>Patient list</h1>
+      <span id="row-count" class="row-count">0 rows</span>
+    </header>
+
+    <p class="data-note">
+      This list is saved only on this phone. Download the Excel file before
+      clearing browser data or changing phones.
+    </p>
+
+    <div class="language-switch" role="radiogroup" aria-label="Spoken language">
+      <button type="button" role="radio" data-language="mr-IN" aria-checked="true">मराठी</button>
+      <button type="button" role="radio" data-language="en-IN" aria-checked="false">English</button>
+    </div>
+
+    <button type="button" id="mic-button" class="mic-button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V22h2v-3.08A7 7 0 0 0 19 12h-2Z"/>
+      </svg>
+      <span id="mic-label">Tap and say name, then number</span>
+    </button>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <ul id="rows" class="rows" aria-label="Dictated patients, newest first"></ul>
+    <p id="empty-hint" class="empty-hint">
+      No patients yet. Tap the button and say one patient: the name, then the
+      mobile number.
+    </p>
+
+    <div class="list-actions">
+      <button type="button" id="download-button" class="primary-button">Download Excel</button>
+      <button type="button" id="clear-button" class="quiet-button">Clear list</button>
+    </div>
+
+    <details class="panel">
+      <summary>Type an entry instead</summary>
+      <form id="typed-entry-form">
+        <label for="typed-entry-input">Name and number, as you would say it</label>
+        <input id="typed-entry-input" type="text" autocomplete="off"
+               placeholder="रमेश पाटील 9822012345">
+        <button type="submit" class="primary-button">Add</button>
+      </form>
+    </details>
+
+    <details class="panel" id="key-panel">
+      <summary>Claude key</summary>
+      <p id="key-state" class="panel-note"></p>
+      <form id="key-form">
+        <label for="key-input">Anthropic API key</label>
+        <input id="key-input" type="password" autocomplete="off" autocapitalize="off"
+               spellcheck="false" placeholder="Paste the key here">
+        <div class="panel-actions">
+          <button type="submit" class="primary-button">Save key</button>
+          <button type="button" id="test-key-button" class="quiet-button">Test key</button>
+          <button type="button" id="remove-key-button" class="quiet-button">Remove key</button>
+        </div>
+      </form>
+      <p id="key-status" class="panel-note" role="status" aria-live="polite"></p>
+      <p class="panel-note">
+        The key is kept only in this browser and is sent only to Anthropic.
+        Without a key, entries are still added but are not cleaned up.
+      </p>
+    </details>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
