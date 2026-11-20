@@ -252,7 +252,11 @@ async function toggleListening() {
     setStatus('Listening…');
     const alternatives = await activeListening.finished;
     if (alternatives.length === 0) {
-      setStatus('Nothing was heard. Tap and try again.');
+      setStatus(
+        language === 'mr-IN'
+          ? 'Nothing was heard in Marathi. Tap and try again. If this keeps happening, this phone may not support Marathi speech: switch to English.'
+          : 'Nothing was heard in English. Tap and try again, speaking close to the phone.',
+      );
     } else {
       addEntry(alternatives);
     }
